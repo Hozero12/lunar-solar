@@ -1,103 +1,104 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import CalendarComponent from './components/Calendar';
 import LunarToSolar from './components/LunarToSolar';
+import AgeCalculator from './components/AgeCalculator';
 import Menu from './components/Menu';
 
 const AppContainer = styled.div`
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #f5f5f5;
-  padding: 20px;
-  
-  @media (max-width: 480px) {
-    padding: 15px;
-  }
+  background: #f8f9fa;
 `;
 
 const Header = styled.header`
-  padding: 20px;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  
-  @media (max-width: 480px) {
-    padding: 10px;
-  }
 `;
 
 const MainContent = styled.main`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  
-  @media (max-width: 480px) {
-    padding: 10px;
-  }
+  padding-top: 80px;
+  padding-bottom: 40px;
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
-  color: #202124;
-  margin-bottom: 30px;
-  font-weight: 400;
-  
-  @media (max-width: 480px) {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
+  text-align: center;
+  color: #1a73e8;
+  margin-bottom: 2rem;
+  font-size: 2rem;
 `;
 
 const Footer = styled.footer`
-  padding: 20px;
-  background-color: #f2f2f2;
-  color: #70757a;
-  font-size: 14px;
   text-align: center;
-  
-  @media (max-width: 480px) {
-    padding: 15px;
-    font-size: 12px;
-  }
+  padding: 1rem;
+  background: white;
+  color: #5f6368;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 const AppContent: React.FC = () => {
   const location = useLocation();
-  const isLunarToSolar = location.pathname === '/lunar-to-solar';
+  const path = location.pathname;
+
+  const getTitle = () => {
+    switch (path) {
+      case '/lunar-to-solar':
+        return '음력 → 양력 변환';
+      case '/age-calculator':
+        return '만 나이 계산';
+      default:
+        return '양력 → 음력 변환';
+    }
+  };
+
+  const getComponent = () => {
+    switch (path) {
+      case '/lunar-to-solar':
+        return <LunarToSolar />;
+      case '/age-calculator':
+        return <AgeCalculator />;
+      default:
+        return <CalendarComponent />;
+    }
+  };
 
   return (
     <AppContainer>
       <Header>
         <Menu />
       </Header>
-      
       <MainContent>
-        <Title>{isLunarToSolar ? '음력을 양력으로 변환' : '양력을 음력으로 변환'}</Title>
-        {isLunarToSolar ? <LunarToSolar /> : <CalendarComponent />}
+        <Title>{getTitle()}</Title>
+        {getComponent()}
       </MainContent>
-
       <Footer>
-        © 2024 Calendar App
+        © 2024 Lunar Solar Converter. All rights reserved.
       </Footer>
     </AppContainer>
   );
 };
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<AppContent />} />
         <Route path="/lunar-to-solar" element={<AppContent />} />
+        <Route path="/age-calculator" element={<AppContent />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
