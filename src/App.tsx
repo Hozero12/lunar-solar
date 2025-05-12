@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import CalendarComponent from './components/Calendar';
 import LunarToSolar from './components/LunarToSolar';
 import AgeCalculator from './components/AgeCalculator';
@@ -62,6 +63,17 @@ const AppContent: React.FC = () => {
     }
   };
 
+  const getDescription = () => {
+    switch (path) {
+      case '/lunar-to-solar':
+        return '음력 날짜를 양력 날짜로 변환하는 무료 온라인 도구입니다. 정확한 날짜 변환과 함께 요일 정보도 제공합니다.';
+      case '/age-calculator':
+        return '정확한 만 나이를 계산하는 무료 온라인 도구입니다. 생년월일을 입력하면 만 나이를 즉시 확인할 수 있습니다.';
+      default:
+        return '양력 날짜를 음력 날짜로 변환하는 무료 온라인 도구입니다. 정확한 날짜 변환과 함께 요일 정보도 제공합니다.';
+    }
+  };
+
   const getComponent = () => {
     switch (path) {
       case '/lunar-to-solar':
@@ -73,13 +85,29 @@ const AppContent: React.FC = () => {
     }
   };
 
+  const title = getTitle();
+  const description = getDescription();
+
   return (
     <AppContainer>
+      <Helmet>
+        <title>{title} | Lunar Solar Converter</title>
+        <meta name="description" content={description} />
+        <meta name="keywords" content="음력, 양력, 변환, 만나이, 계산기, 달력, 음력변환, 양력변환" />
+        <meta property="og:title" content={`${title} | Lunar Solar Converter`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://lunar-solar.vercel.app${path}`} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={`${title} | Lunar Solar Converter`} />
+        <meta name="twitter:description" content={description} />
+        <link rel="canonical" href={`https://lunar-solar.vercel.app${path}`} />
+      </Helmet>
       <Header>
         <Menu />
       </Header>
       <MainContent>
-        <Title>{getTitle()}</Title>
+        <Title>{title}</Title>
         {getComponent()}
       </MainContent>
       <Footer>
