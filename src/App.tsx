@@ -55,23 +55,27 @@ const AppContent: React.FC = () => {
   const getTitle = () => {
     switch (path) {
       case '/lunar-to-solar':
-        return '음력 → 양력 변환';
+        return '음력 → 양력 변환 | Lunar to Solar Date Converter';
       case '/age-calculator':
-        return '만 나이 계산';
+        return '만 나이 계산 | Age Calculator';
       default:
-        return '양력 → 음력 변환';
+        return '양력 → 음력 변환 | Solar to Lunar Date Converter';
     }
   };
 
   const getDescription = () => {
     switch (path) {
       case '/lunar-to-solar':
-        return '음력 날짜를 양력 날짜로 변환하는 무료 온라인 도구입니다. 정확한 날짜 변환과 함께 요일 정보도 제공합니다.';
+        return '음력 날짜를 양력 날짜로 변환하는 무료 온라인 도구입니다. 정확한 날짜 변환과 함께 요일 정보도 제공합니다. | Free online tool to convert lunar dates to solar dates. Get accurate date conversion with weekday information.';
       case '/age-calculator':
-        return '정확한 만 나이를 계산하는 무료 온라인 도구입니다. 생년월일을 입력하면 만 나이를 즉시 확인할 수 있습니다.';
+        return '정확한 만 나이를 계산하는 무료 온라인 도구입니다. 생년월일을 입력하면 만 나이를 즉시 확인할 수 있습니다. | Free online tool to calculate exact age. Enter your birth date to instantly check your age.';
       default:
-        return '양력 날짜를 음력 날짜로 변환하는 무료 온라인 도구입니다. 정확한 날짜 변환과 함께 요일 정보도 제공합니다.';
+        return '양력 날짜를 음력 날짜로 변환하는 무료 온라인 도구입니다. 정확한 날짜 변환과 함께 요일 정보도 제공합니다. | Free online tool to convert solar dates to lunar dates. Get accurate date conversion with weekday information.';
     }
+  };
+
+  const getKeywords = () => {
+    return '음력, 양력, 변환, 만나이, 계산기, 달력, 음력변환, 양력변환, lunar calendar, solar calendar, date converter, age calculator, calendar, lunar conversion, solar conversion';
   };
 
   const getComponent = () => {
@@ -87,27 +91,31 @@ const AppContent: React.FC = () => {
 
   const title = getTitle();
   const description = getDescription();
+  const keywords = getKeywords();
 
   return (
     <AppContainer>
       <Helmet>
-        <title>{title} | Lunar Solar Converter</title>
+        <title>{title}</title>
         <meta name="description" content={description} />
-        <meta name="keywords" content="음력, 양력, 변환, 만나이, 계산기, 달력, 음력변환, 양력변환" />
-        <meta property="og:title" content={`${title} | Lunar Solar Converter`} />
+        <meta name="keywords" content={keywords} />
+        <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://lunar-solar.vercel.app${path}`} />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={`${title} | Lunar Solar Converter`} />
+        <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
         <link rel="canonical" href={`https://lunar-solar.vercel.app${path}`} />
+        <meta name="language" content="Korean, English" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="robots" content="index, follow" />
       </Helmet>
       <Header>
         <Menu />
       </Header>
       <MainContent>
-        <Title>{title}</Title>
+        <Title>{title.split(' | ')[0]}</Title>
         {getComponent()}
       </MainContent>
       <Footer>
