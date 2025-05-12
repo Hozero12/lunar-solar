@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { Analytics } from "@vercel/analytics/react";
 import CalendarComponent from './components/Calendar';
 import LunarToSolar from './components/LunarToSolar';
 import AgeCalculator from './components/AgeCalculator';
@@ -133,6 +134,7 @@ const App: React.FC = () => {
         <Route path="/lunar-to-solar" element={<AppContent />} />
         <Route path="/age-calculator" element={<AppContent />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 };
